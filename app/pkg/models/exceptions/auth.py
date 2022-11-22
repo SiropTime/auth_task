@@ -20,3 +20,8 @@ class IncorrectLengthOTP(BaseException):
 class IncorrectUsernameOrPassword(BaseException):
     status_code = 406
     message = "Incorrect username or password or secret key"
+
+
+class TokenExpired(BaseException):
+    status_code = 419
+    message = "Session timed out. Try to auth again"

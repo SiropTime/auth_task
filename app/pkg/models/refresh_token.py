@@ -22,7 +22,7 @@ class BaseJWTToken(BaseModel):
 
 class JWTToken(BaseJWTToken):
     """RefreshToken from database."""
-
+    id: PositiveInt
     user_id: PositiveInt
     refresh_token: NotEmptySecretStr
     fingerprint: NotEmptySecretStr

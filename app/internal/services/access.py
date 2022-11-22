@@ -1,0 +1,1 @@
+from app.internal.repository.postgresql.access_tokens import AccessTokenRepository

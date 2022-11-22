@@ -3,8 +3,10 @@ from typing import Optional
 from app.internal.pkg.password import password
 from app.internal.repository.exceptions import EmptyResult, UniqueViolation
 from app.internal.repository.postgresql import RefreshTokenRepository
+from app.internal.repository.postgresql.access_tokens import AccessTokenRepository
 from app.internal.services.user import UserService
 from app.pkg.jwt import UnAuthorized, WrongToken
+from app.pkg.models.access_token import AccessToken
 from app.pkg.models.auth import AuthCommand
 from app.pkg.models.exceptions.auth import IncorrectUsernameOrPassword
 from app.pkg.models.otp import Check2FACommand
@@ -24,6 +26,7 @@ __all__ = ["AuthService"]
 
 class AuthService:
     refresh_token_repository: RefreshTokenRepository
+    access_token_repository: AccessTokenRepository
     user_service: UserService
     otp_service: OTPService
 
@@ -31,10 +34,12 @@ class AuthService:
         self,
         user_service: UserService,
         refresh_token_repository: RefreshTokenRepository,
+        access_token_repository: AccessTokenRepository,
         otp_service: OTPService,
     ):
         self.user_service = user_service
         self.refresh_token_repository = refresh_token_repository
+        self.access_token_repository = access_token_repository
         self.otp_service = otp_service
 
     def check_2fa(self, cmd: Check2FACommand):
@@ -70,9 +75,12 @@ class AuthService:
         except EmptyResult:
             raise UnAuthorized
 
-    async def create_refresh_token(self, cmd: CreateJWTTokenCommand) -> JWTToken:
+    async def create_refresh_token(self, cmd: CreateJWTTokenCommand, access_token: str) -> JWTToken:
         try:
-            return await self.refresh_token_repository.create(cmd=cmd)
+            rt: JWTToken = await self.refresh_token_repository.create(cmd=cmd)
+            at: AccessToken = await self.access_token_repository.create(cmd=AccessToken(refresh_id=rt.id,
+                                                                                        access_token=access_token))
+            return rt
         except UniqueViolation:
             return await self.refresh_token_repository.update(
                 cmd=UpdateJWTTokenCommand(

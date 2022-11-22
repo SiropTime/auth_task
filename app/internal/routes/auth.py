@@ -94,6 +94,7 @@ async def auth_user(
             fingerprint=cmd.fingerprint,
             user_id=user.id,
         ),
+        access_token=at
     )
     refresh.set_refresh_cookie(response=response, refresh_token=rt)
 
