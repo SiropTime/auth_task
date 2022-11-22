@@ -10,7 +10,11 @@ class BaseUserRole(BaseModel):
 
 
 class UserRole(BaseEnum):
+    """
+    Enum for user's roles
+    """
     USER = "user"
+    ADMIN = "admin"
 
 
 class UserRoleFields:

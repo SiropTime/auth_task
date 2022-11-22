@@ -1,3 +1,5 @@
+import datetime
+
 from pydantic import PositiveInt
 
 from app.pkg.models.base import BaseModel
@@ -24,6 +26,7 @@ class JWTToken(BaseJWTToken):
     user_id: PositiveInt
     refresh_token: NotEmptySecretStr
     fingerprint: NotEmptySecretStr
+    expiresat: PositiveInt
 
 
 # Commands
@@ -31,12 +34,14 @@ class CreateJWTTokenCommand(BaseJWTToken):
     user_id: PositiveInt
     refresh_token: NotEmptySecretStr
     fingerprint: NotEmptySecretStr
+    expiresat: PositiveInt = (datetime.datetime.now() + datetime.timedelta(days=30)).timestamp().__int__()
 
 
 class UpdateJWTTokenCommand(BaseJWTToken):
     user_id: PositiveInt
     refresh_token: NotEmptySecretStr
     fingerprint: NotEmptySecretStr
+    expiresat: PositiveInt
 
 
 class DeleteJWTTokenCommand(BaseJWTToken):

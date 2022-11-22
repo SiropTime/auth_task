@@ -25,7 +25,7 @@ class AuthCommand(BaseAuth):
     username: str
     password: EncryptedSecretBytes
     fingerprint: NotEmptySecretStr
-    verify_code: SecretStr
+    # verify_code: SecretStr
 
     @validator("fingerprint")
     def validate_min_length(

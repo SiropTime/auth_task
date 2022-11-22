@@ -20,7 +20,7 @@ class RefreshTokenRepository(Repository):
     async def create(self, cmd: CreateJWTTokenCommand) -> JWTToken:
         q = """
                 insert into refresh_tokens(user_id, refresh_token, fingerprint)
-                    values (%(user_id)s, %(refresh_token)s, %(fingerprint)s)
+                    values (%(user_id)s, %(refresh_token)s, %(fingerprint)s %(expiresat)s)
                 returning *;
             """
         async with get_connection() as cur:

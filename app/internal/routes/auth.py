@@ -61,8 +61,8 @@ async def auth_user(
     ),
 ):
     user = await auth_service.check_user_password(cmd=cmd)
-    if not await auth_service.check_2fa(Check2FACommand(verify_code=cmd.verify_code)):
-        raise IncorrectUsernameOrPassword
+    # if not await auth_service.check_2fa(Check2FACommand(verify_code=cmd.verify_code)):
+    #     raise IncorrectUsernameOrPassword
 
     at = access.create_access_token(
         subject={"user_id": user.id, "role_name": user.role_name},

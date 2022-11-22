@@ -14,6 +14,8 @@ steps = [
                 user_id int references users(id),
                 refresh_token text not null unique,
                 fingerprint text not null,
+                expiresat bigint not null,
+                createdat timestamp with time zone default now(),
                 constraint all_value_in_row_must_be_unique unique (
                     user_id, refresh_token, fingerprint
                 )
