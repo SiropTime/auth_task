@@ -27,4 +27,5 @@ class Services(containers.DeclarativeContainer):
         otp_service=otp_service,
         user_service=user_service,
         refresh_token_repository=repositories.refresh_token_repository,
+        access_token_repository=repositories.access_token_repository
     )

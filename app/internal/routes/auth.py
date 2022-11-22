@@ -32,7 +32,7 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
     responses={
         **IncorrectUsernameOrPassword().build_docs(),
     },
-    description="Rout for authorize"
+    description="Route for authorize"
     + "Required in headers Authorized Bearer access token",
 )
 @inject

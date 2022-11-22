@@ -12,7 +12,7 @@ class AccessTokenRepository(Repository):
     async def create(self, cmd: AccessToken) -> AccessToken:
         query = """
                 INSERT INTO access_tokens(refresh_id, access_token)
-                    VALUES (%(user_id)s, %(access_token)s)
+                    VALUES (%(refresh_id)s, %(access_token)s)
                 RETURNING *;
                 """
         async with get_connection() as cur:
