@@ -1,6 +1,6 @@
 from typing import Optional
 
-from app.internal.pkg.handlers import password
+from app.internal.pkg.password import password
 from app.internal.repository.exceptions import EmptyResult, UniqueViolation
 from app.internal.repository.postgresql import RefreshTokenRepository
 from app.internal.services.user import UserService
