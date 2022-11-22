@@ -26,7 +26,7 @@ class JWTToken(BaseJWTToken):
     user_id: PositiveInt
     refresh_token: NotEmptySecretStr
     fingerprint: NotEmptySecretStr
-    expiresat: PositiveInt
+    expiresat: float = 30*24*60*60  # month in seconds
 
 
 # Commands
@@ -34,14 +34,14 @@ class CreateJWTTokenCommand(BaseJWTToken):
     user_id: PositiveInt
     refresh_token: NotEmptySecretStr
     fingerprint: NotEmptySecretStr
-    expiresat: PositiveInt = (datetime.datetime.now() + datetime.timedelta(days=30)).timestamp().__int__()
+    expiresat: float = 30*24*60*60
 
 
 class UpdateJWTTokenCommand(BaseJWTToken):
     user_id: PositiveInt
     refresh_token: NotEmptySecretStr
     fingerprint: NotEmptySecretStr
-    expiresat: PositiveInt
+    expiresat: float = 30*24*60*60
 
 
 class DeleteJWTTokenCommand(BaseJWTToken):

@@ -90,8 +90,12 @@ class AuthService:
                 ),
             )
 
-    async def update_refresh_token(self, cmd: UpdateJWTTokenCommand) -> JWTToken:
-        return await self.refresh_token_repository.update(cmd)
+    async def update_refresh_token(self, cmd: UpdateJWTTokenCommand, access_token: str) -> JWTToken:
+        rt: JWTToken = await self.refresh_token_repository.update(cmd)
+        at: AccessToken = await self.access_token_repository.update(
+            cmd=AccessToken(refresh_id=rt.id, access_token=access_token)
+        )
+        return rt
 
     async def delete_refresh_token(self, cmd: DeleteJWTTokenCommand) -> JWTToken:
         try:

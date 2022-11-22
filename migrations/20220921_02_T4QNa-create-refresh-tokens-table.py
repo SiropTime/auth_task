@@ -11,7 +11,7 @@ steps = [
         """
             create table if not exists refresh_tokens(
                 id serial primary key, 
-                user_id int references users(id),
+                user_id int references users(id) ON DELETE CASCADE ,
                 refresh_token text not null unique,
                 fingerprint text not null,
                 expiresat bigint not null,

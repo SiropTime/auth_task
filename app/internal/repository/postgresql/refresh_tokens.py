@@ -30,7 +30,7 @@ class RefreshTokenRepository(Repository):
     @collect_response
     async def read(self, query: ReadJWTTokenQuery) -> JWTToken:
         q = """
-                select user_id, refresh_token, fingerprint from refresh_tokens
+                select id, user_id, refresh_token, fingerprint, expiresat from refresh_tokens
                 where user_id = %(user_id)s and refresh_token = %(refresh_token)s;
             """
         async with get_connection() as cur:
