@@ -11,6 +11,8 @@ from fastapi import status
 
 from app.pkg.models.base import BaseException
 
+print("hwoijtsekjgasg")
+print("sdagjoigqohrgokqjurgb    erpgjqrgoieqjrgpojqeriugjoergbdfjgaf")
 
 class UniqueViolation(BaseException):
     def __init__(self, message: str = "ForeignKeyViolation"):
